@@ -2,7 +2,11 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ $title }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
     <style>
         body {
             margin: 0;
@@ -18,7 +22,6 @@
             color: black;
             position: fixed;
             width: 100%;
-            height: 5%;
             top: 0;
             z-index: 1000;
             margin-bottom: 0;
@@ -119,6 +122,7 @@
         @yield('manage_users')
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

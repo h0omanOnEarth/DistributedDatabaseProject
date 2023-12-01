@@ -17,6 +17,6 @@ Route::get('/register', function () {
 
 Route::get('/admin/users', function () {
     return view('screens\admin\manage_users', [
-        "title" => "Project DD | Register",
+        "title" => "Project DD | Manage User",
     ]);
 });
