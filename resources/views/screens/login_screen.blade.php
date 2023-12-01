@@ -14,6 +14,10 @@
                     <input type="password" name="password" class="form-control" id="exampleInputPassword1">
                 </div>
                 <button type="submit" name="buttonLogin" class="mt-3 btn btn-dark w-100" id="btnsubmit">Login</button>
+
+                <div class="mt-3 text-center">
+                    Don't have an account? <a href="/register">Register</a>
+                </div>
             </form>
         </div>
     </div>
