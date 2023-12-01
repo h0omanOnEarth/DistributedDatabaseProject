@@ -13,3 +13,10 @@ Route::get('/register', function () {
         "title" => "Project DD | Register",
     ]);
 });
+
+
+Route::get('/admin/users', function () {
+    return view('screens\admin\manage_users', [
+        "title" => "Project DD | Register",
+    ]);
+});
