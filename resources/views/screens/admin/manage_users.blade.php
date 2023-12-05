@@ -63,6 +63,7 @@
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,6 +73,9 @@
                                     <td>johndoe</td>
                                     <td>johndoe@example.com</td>
                                     <td>Admin</td>
+                                    <td>
+                                        <button class="btn btn-danger">Ban</button> <!-- Tambahkan button Ban -->
+                                    </td>
                                 </tr>
                                 <!-- Tambahkan data lainnya di sini -->
                             </tbody>

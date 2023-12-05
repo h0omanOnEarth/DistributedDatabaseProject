@@ -35,7 +35,7 @@
                         <input class="form-check-input" type="radio" name="registration_type" id="sales"
                             value="sales">
                         <label class="form-check-label" for="sales">
-                            Sales
+                            Seller
                         </label>
                     </div>
                 </div>

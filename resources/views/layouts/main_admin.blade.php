@@ -113,13 +113,16 @@
 
     <div class="sidebar">
         <a class="active" href="#home">Home</a>
-        <a href="#news">Users</a>
-        <a href="#contact">Transactions</a>
-        <a href="#about">Logout</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/products">Products</a>
+        <a href="/admin/transactions">Transactions</a>
+        <a href="">Logout</a>
     </div>
 
     <div class="content">
         @yield('manage_users')
+        @yield('manage_products')
+        @yield('manage_transactions')
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
