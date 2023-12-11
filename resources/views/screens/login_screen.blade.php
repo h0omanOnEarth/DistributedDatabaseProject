@@ -15,7 +15,6 @@
                 </div>
                 <a href="/admin/users" class="mt-3 btn btn-dark w-100" id="btnsubmit">Login</a>
 
-
                 <div class="mt-3 text-center">
                     Don't have an account? <a href="/register">Register</a>
                 </div>

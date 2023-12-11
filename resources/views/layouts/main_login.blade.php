@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $title }}</title>
+    <title>E-COMMERCE APP</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
     <style>
         body {
@@ -35,7 +35,6 @@
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <div class="formLogin card p-4">
             <h2 class="text-center mb-4">Login</h2>
-
             @yield('form_login')
         </div>
     </div>

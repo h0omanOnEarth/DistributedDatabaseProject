@@ -1,18 +1,13 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('screens\login_screen', [
-        "title" => "Project DD | Login",
-    ]);
-});
+Route::get('/', [AuthController::class,'loginPage']);
 
-Route::get('/register', function () {
-    return view('screens\register_screen', [
-        "title" => "Project DD | Register",
-    ]);
-});
+Route::get('/register', [AuthController::class,'registerPage']);
+Route::post('/doLogin', [AuthController::class,'doLogin']);
+Route::post('/doRegister', [AuthController::class,'doRegister']);
 
 
 Route::get('/admin/users', function () {

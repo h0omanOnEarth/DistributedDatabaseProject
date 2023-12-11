@@ -2,9 +2,18 @@
 @extends('layouts.main_register')
 
 @section('form_register')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger">{{ $error }}</div>
+        @endforeach
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form action="#" method="">
+            <form action="{{ url('/doRegister') }}" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Name</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" name="name">
@@ -25,15 +34,13 @@
                 <div class="mb-3">
                     <label class="form-label">Register as:</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="registration_type" id="customer"
-                            value="customer">
+                        <input class="form-check-input" type="radio" name="role" id="customer" value="customer">
                         <label class="form-check-label" for="customer">
                             Customer
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="registration_type" id="sales"
-                            value="sales">
+                        <input class="form-check-input" type="radio" name="role" id="sales" value="sales">
                         <label class="form-check-label" for="sales">
                             Seller
                         </label>
@@ -46,6 +53,7 @@
                     Already have an account? <a href="/">Login</a>
                 </div>
             </form>
+
         </div>
     </div>
 @endsection
