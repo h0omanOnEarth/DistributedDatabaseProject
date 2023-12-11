@@ -12,7 +12,8 @@ class ProductController extends Controller
     public function gotoproducts()
     {
         $user = Auth::user();
-        return view('screens.seller.master_products', ["user" => $user]);
+        $items = Product::get();
+        return view('screens.seller.master_products', ["user" => $user, "items" => $items]);
     }
 
     public function addProduct(Request $request)
@@ -27,7 +28,12 @@ class ProductController extends Controller
             'harga' => $data['harga'],
             'stok' => $data['stok'],
         ]);
-        
+
         return back()->with('success', 'Berhasil menambahkan product!');
+    }
+
+    public function updateProduct($id)
+    {
+        // Your update logic here
     }
 }
