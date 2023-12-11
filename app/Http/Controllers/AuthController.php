@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,23 @@ class AuthController extends Controller
     }
 
     public function doLogin(Request $request){
-
+        $credentials = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->role == 'customer') {
+                return redirect('/customer/home');
+            } elseif ($user->role == 'seller') {
+                return redirect('/seller/home');
+            }
+            else{
+                return redirect('/admin/home');
+            }
+        } else {
+            return back()->with('error', 'Gagal login');
+        }
     }
 
     public function doRegister(Request $request) {
@@ -37,5 +54,9 @@ class AuthController extends Controller
         ]);
 
         return back()->with('success', 'Berhasil register!');
+    }
+    public function Logout(){
+        Auth::logout();
+        return redirect('/')->with('success', 'Berhasil logout');
     }
 }
