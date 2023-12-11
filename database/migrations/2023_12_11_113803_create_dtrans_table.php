@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('dtrans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->integer('harga');
-            $table->integer('stok');
+            $table->string('htrans_kode');
+            $table->foreign('htrans_kode', 'fk_dtrans_to_htrans')->references('kode')->on('htrans')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreignId('products_id')->constrained();
+            $table->integer('qty');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('dtrans');
     }
 };
