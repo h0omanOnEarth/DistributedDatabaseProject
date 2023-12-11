@@ -29,7 +29,9 @@ Route::prefix('seller')->group(function () {
         ProductController::class,
         'addProduct'
     ]);
-    Route::put('/product/update/{id}', [ProductController::class, 'updateProduct']);
+    Route::get('/products/update/{id}', [ProductController::class, 'gotoupdateproduct']);
+    Route::put('/products/update/{id}', [ProductController::class, 'updateProduct']);
+    Route::get('/products/delete/{id}', [ProductController::class, 'deleteProduct']);
 });
 
 

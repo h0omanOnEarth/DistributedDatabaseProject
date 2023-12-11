@@ -32,8 +32,34 @@ class ProductController extends Controller
         return back()->with('success', 'Berhasil menambahkan product!');
     }
 
+    public function gotoupdateproduct($id)
+    {
+        $user = Auth::user();
+        $product = Product::findOrFail($id);
+        return view('screens.seller.update_products', ["user" => $user, "product" => $product]);
+    }
+
+
     public function updateProduct($id)
     {
-        // Your update logic here
+        $product = Product::findOrFail($id);
+
+        $validatedData = request()->validate([
+            'nama' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:1',
+            'stok' => 'required|numeric|min:1',
+        ]);
+
+        $product->update($validatedData);
+
+        return redirect('/seller/products/update/' . $id)->with('success', 'Product updated successfully');
+    }
+
+    public function deleteProduct($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect('/seller/products')->with('success', 'Product deleted successfully');
     }
 }

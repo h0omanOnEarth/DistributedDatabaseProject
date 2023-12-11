@@ -1,9 +1,9 @@
 @extends('layouts.main_seller')
 
 @section('content')
-    <h1>Products</h1>
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <h2>Products</h2>
             <table class="table table-dark">
                 <thead>
                     <tr>
@@ -23,11 +23,11 @@
                             <td>{{ $item->stok }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{ url('/seller/product/update/' . $item->kodebarang) }}">
+                                    <a href="{{ url('/seller/products/update/' . $item->id) }}">
                                         <button type="button" class="btn btn-dark buttonsubmit"
                                             name="btnupdate">Update</button>
                                     </a>
-                                    <a href="{{ url('/seller/product/delete/' . $item->kodebarang) }}">
+                                    <a href="{{ url('/seller/products/delete/' . $item->id) }}">
                                         <button type="button" class="btn btn-dark buttonsubmit"
                                             name="btndelete">Delete</button>
                                     </a>
