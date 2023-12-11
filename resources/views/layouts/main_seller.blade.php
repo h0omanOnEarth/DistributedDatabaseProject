@@ -41,7 +41,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#products">Produk</a>
+                        <a class="nav-link" href="{{ url('/seller/products') }}">Produk</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
