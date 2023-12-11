@@ -29,7 +29,7 @@ class ProductController extends Controller
             'stok' => $data['stok'],
         ]);
 
-        return back()->with('success', 'Berhasil menambahkan product!');
+        return back()->with('success', 'Product added successfully!');
     }
 
     public function gotoupdateproduct($id)
