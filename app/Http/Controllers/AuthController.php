@@ -9,15 +9,18 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     //
-    public function loginPage(){
+    public function loginPage()
+    {
         return view('screens.login_screen');
     }
 
-    function registerPage(){
+    function registerPage()
+    {
         return view('screens.register_screen');
     }
 
-    public function doLogin(Request $request){
+    public function doLogin(Request $request)
+    {
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -28,8 +31,7 @@ class AuthController extends Controller
                 return redirect('/customer/home');
             } elseif ($user->role == 'seller') {
                 return redirect('/seller/home');
-            }
-            else{
+            } elseif ($user->role == 'admin') {
                 return redirect('/admin/home');
             }
         } else {
@@ -37,7 +39,8 @@ class AuthController extends Controller
         }
     }
 
-    public function doRegister(Request $request) {
+    public function doRegister(Request $request)
+    {
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
@@ -55,7 +58,8 @@ class AuthController extends Controller
 
         return back()->with('success', 'Berhasil register!');
     }
-    public function Logout(){
+    public function Logout()
+    {
         Auth::logout();
         return redirect('/')->with('success', 'Berhasil logout');
     }

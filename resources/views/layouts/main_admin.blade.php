@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $title }}</title>
+    <title>ADMIN</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
     <style>
         body {
@@ -107,7 +107,7 @@
 <body>
 
     <div class="navbar">
-        <span>Welcome Back, John Doe</span>
+        <span>Welcome Back, {{ $user->name }}</span>
         <a href="#profile">Profile</a>
     </div>
 
