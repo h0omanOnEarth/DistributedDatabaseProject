@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use HasFactory;
+    public $table = 'cart';
+    public $primaryKey = 'id';
+    public $incrementing = true;
+    public $timestamps = true;
+    public $fillable = ['users_id', 'products_id', 'qty'];
 }

@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     //
-    public function homePage(){
+    public function homePage()
+    {
         $user = Auth::user();
         $items = Product::all();
-        return view('screens.customer.home',['user'=>$user,'items'=>$items]);
+        return view('screens.customer.home', ['user' => $user, 'products' => $items]);
     }
 }

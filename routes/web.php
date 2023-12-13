@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Seller\HomeController as SellerHomeController;
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
 use App\Http\Controllers\ProductController;
@@ -22,6 +23,8 @@ Route::prefix('admin')->group(function () {
 
 Route::prefix('customer')->group(function () {
     Route::get('/home', [CustomerHomeController::class, 'homePage']);
+    Route::post('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart', [CartController::class, 'index']);
 });
 
 Route::prefix('seller')->group(function () {

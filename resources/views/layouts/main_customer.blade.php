@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>E-COMMERCE APP</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             margin: 0;
@@ -21,7 +22,7 @@
             margin-left: 20px;
         }
 
-        div.content {
+        .content {
             margin-top: 70px;
             padding: 1px 16px;
             height: 1000px;
@@ -46,14 +47,17 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
+                        <a class="nav-link" href="#cart">
+                            <i class="fas fa-shopping-cart"></i> <!-- Ikon cart -->
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
-
 
     <div class="content">
         @yield('content')

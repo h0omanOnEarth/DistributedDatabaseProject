@@ -1,44 +1,55 @@
 @extends('layouts.main_customer')
 
 @section('content')
-    <h1>Ini misal buat produk</h1>
-    <p>Konten produk</p>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2>Products</h2>
-            <table class="table table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">Nama Produk</th>
-                        <th scope="col">Harga Produk</th>
-                        <th scope="col">Stok Produk</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($items as $item)
-                        <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->harga }}</td>
-                            <td>{{ $item->stok }}</td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <a href="{{ url('/seller/products/update/' . $item->id) }}">
-                                        <button type="button" class="btn btn-dark buttonsubmit"
-                                            name="btnupdate">Update</button>
-                                    </a>
-                                    <a href="{{ url('/seller/products/delete/' . $item->id) }}">
-                                        <button type="button" class="btn btn-dark buttonsubmit"
-                                            name="btndelete">Delete</button>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    <div class="container mt-5">
+        <div class="mb-3">
+            <input type="text" class="form-control" id="searchBar" placeholder="Search" onkeyup="filterProducts()">
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <!-- Loop through products data -->
+            @foreach ($products as $product)
+                <div class="col">
+                    <div class="card h-100">
+                        <!-- Placeholder image, replace with actual image URL -->
+                        <img src="https://source.unsplash.com/150x150/?product" class="card-img-top" alt="Product Image">
+
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $product->nama }}</h5>
+                            <p class="card-text">Price: Rp{{ $product->harga }}</p>
+                        </div>
+
+                        <div class="card-footer">
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
         </div>
     </div>
+
+    <script>
+        function filterProducts() {
+            var input, filter, cards, card, title, i;
+            input = document.getElementById("searchBar");
+            filter = input.value.toUpperCase();
+            cards = document.getElementsByClassName("card");
+
+            for (i = 0; i < cards.length; i++) {
+                card = cards[i];
+                title = card.querySelector(".card-title");
+                if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            }
+        }
+    </script>
 @endsection

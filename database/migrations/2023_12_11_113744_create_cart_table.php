@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cart', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('users_id')->constrained();
             $table->foreignId('products_id')->constrained();
             $table->integer('qty');
