@@ -2,9 +2,11 @@
 @extends('layouts.main_admin')
 
 @section('manage_users')
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
     <div class="container mt-5">
         <div class="row">
-            <!-- Card untuk menampilkan daftar dalam bentuk tabel -->
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
@@ -27,9 +29,15 @@
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->role }}</td>
                                         <td>
-                                            <a href="{{ url('/admin/users/block/' . $item->id) }}">
-                                                <button type="button" class="btn btn-danger" name="btnblock">Block</button>
-                                            </a>
+                                            @if ($item->role == 'admin')
+                                                <button type="button" class="btn btn-danger" name="btnblock"
+                                                    disabled>Block</button>
+                                            @else
+                                                <a href="{{ url('/admin/users/block/' . $item->id) }}">
+                                                    <button type="button" class="btn btn-danger"
+                                                        name="btnblock">{{ $item->status == 0 ? 'Unblock' : 'Block' }}</button>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
