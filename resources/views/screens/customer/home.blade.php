@@ -13,7 +13,8 @@
                 <div class="col">
                     <div class="card h-100">
                         <!-- Placeholder image, replace with actual image URL -->
-                        <img src="https://source.unsplash.com/150x150/?product" class="card-img-top" alt="Product Image">
+                        <img src="https://source.unsplash.com/150x150/?product" class="card-img-top"
+                            style="object-fit: cover; height: 150px;" alt="Product Image">
 
 
                         <div class="card-body">
