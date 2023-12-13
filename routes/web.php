@@ -26,6 +26,7 @@ Route::prefix('customer')->group(function () {
     Route::post('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/updateQty', [CartController::class, 'updateQty'])->name('cart.updateQty');
+    Route::post('/cart/deleteItem', [CartController::class, 'deleteItem'])->name('cart.deleteItem');
 });
 
 Route::prefix('seller')->group(function () {

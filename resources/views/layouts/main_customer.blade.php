@@ -66,6 +66,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/customer/home') }}">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Transactions</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">

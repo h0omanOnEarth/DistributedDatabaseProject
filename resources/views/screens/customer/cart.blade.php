@@ -33,6 +33,9 @@
                                             </div>
                                             <!-- Tambahkan sesuatu agar tidak terlalu monoton -->
                                             <p class="card-text mt-2">{{ $product->description }}</p>
+                                            <!-- Tambahkan tombol delete -->
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="deleteCartItem({{ $cartItem->id }})">Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -86,6 +89,28 @@
                     if (response.hasOwnProperty('subtotal')) {
                         $('#subtotal').text('Rp' + response.subtotal);
                     }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Fungsi untuk menghapus item dari keranjang
+        function deleteCartItem(cartItemId) {
+            $.ajax({
+                url: "{{ route('cart.deleteItem') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    cartItemId: cartItemId
+                },
+                success: function(response) {
+                    // Hapus card dari DOM
+                    $('#qty_' + cartItemId).closest('.col').remove();
+
+                    // Update subtotal
+                    $('#subtotal').text('Rp' + response.subtotal);
                 },
                 error: function(xhr, status, error) {
                     console.error(error);

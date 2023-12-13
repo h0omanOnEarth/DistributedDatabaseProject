@@ -57,14 +57,6 @@ class CartController extends Controller
         return redirect('customer/cart')->with('success', 'Product added to cart successfully!');
     }
 
-    public function removeFromCart($cartItemId)
-    {
-        // Delete the specified cart item
-        Cart::destroy($cartItemId);
-
-        return redirect()->route('cart.index')->with('success', 'Product removed from cart successfully!');
-    }
-
     public function updateQty(Request $request)
     {
         $cartItemId = $request->input('cartItemId');
@@ -120,6 +112,29 @@ class CartController extends Controller
 
             // Handle error, misalnya log atau kirim response error
             return response()->json(['error' => 'Failed to update quantity'], 500);
+        }
+    }
+
+    public function deleteItem(Request $request)
+    {
+        $cartItemId = $request->input('cartItemId');
+
+        try {
+            // Temukan item keranjang berdasarkan ID
+            $cartItem = Cart::find($cartItemId);
+
+            // Hapus item dari keranjang
+            $cartItem->delete();
+
+            // Hitung ulang subtotal dan kirim respons
+            $user = Auth::user();
+            $cartItems = Cart::where('users_id', $user->id)->get();
+            $subtotal = $this->calculateSubtotal($cartItems);
+
+            return response()->json(['subtotal' => $subtotal]);
+        } catch (\Exception $e) {
+            // Tangani kesalahan jika terjadi
+            return response()->json(['error' => 'Failed to delete item from cart.'], 500);
         }
     }
 }
