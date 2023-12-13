@@ -12,6 +12,7 @@
         body {
             margin: 0;
             font-family: "Lato", sans-serif;
+            overflow-x: hidden;
         }
 
         .navbar {
@@ -22,10 +23,31 @@
             margin-left: 20px;
         }
 
+        .navbar-nav {
+            margin-right: 10px;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 10px;
+        }
+
+        .dropdown-menu {
+            font-size: 14px;
+            z-index: 1000;
+            padding: 10px;
+            /* Tambahkan padding untuk memberikan ruang di sekitar dropdown */
+        }
+
+        .navbar-nav .nav-link i {
+            margin-right: 5px;
+            /* Berikan margin ke ikon di dalam nav-link */
+        }
+
         .content {
             margin-top: 70px;
             padding: 1px 16px;
             height: 1000px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -34,7 +56,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Selamat datang, {{ $user->name }}</a>
+            <a class="navbar-brand" href="#">Welcome back, {{ $user->name }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -42,7 +64,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#products">Produk</a>
+                        <a class="nav-link" href="{{ url('/customer/home') }}">Home</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -51,8 +73,15 @@
                             <i class="fas fa-shopping-cart"></i> <!-- Ikon cart -->
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i> <!-- Ikon profil -->
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/logout') }}">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
