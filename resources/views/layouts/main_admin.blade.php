@@ -105,7 +105,6 @@
 </head>
 
 <body>
-
     <div class="navbar">
         <span>Welcome Back, {{ $user->name }}</span>
         <a href="#profile">Profile</a>
@@ -113,7 +112,7 @@
 
     <div class="sidebar">
         <a class="active" href="#home">Home</a>
-        <a href="/admin/users">Users</a>
+        <a href="{{ url('/admin/users') }}">Users</a>
         <a href="/admin/products">Products</a>
         <a href="/admin/transactions">Transactions</a>
         <a href="">Logout</a>

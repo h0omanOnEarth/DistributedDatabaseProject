@@ -54,6 +54,7 @@ class AuthController extends Controller
             'username' => $data['username'],
             'password' => bcrypt($data['password']),
             'role' => $data['role'],
+            'status' => 1
         ]);
 
         return back()->with('success', 'Berhasil register!');

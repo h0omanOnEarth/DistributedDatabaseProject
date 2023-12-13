@@ -16,4 +16,13 @@ class HomeController extends Controller
         $users = User::get();
         return view('screens.admin.manage_users', ["user" => $user, "items" => $users]);
     }
+
+    public function usersPage()
+    {
+        $user = Auth::user();
+        $users = User::get();
+        return view('screens.admin.manage_users', ["user" => $user, "items" => $users]);
+    }
+
+    
 }

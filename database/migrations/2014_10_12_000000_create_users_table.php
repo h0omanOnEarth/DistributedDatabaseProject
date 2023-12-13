@@ -19,6 +19,7 @@ return new class extends Migration
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role');
+            $table->integer('status')->default(1); //0 = blocked, 1 = unblock
             $table->rememberToken();
             $table->timestamps();
         });

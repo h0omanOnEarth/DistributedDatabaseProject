@@ -27,7 +27,7 @@
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->role }}</td>
                                         <td>
-                                            <a href="{{ url('/seller/products/update/' . $item->id) }}">
+                                            <a href="{{ url('/admin/users/block/' . $item->id) }}">
                                                 <button type="button" class="btn btn-danger" name="btnblock">Block</button>
                                             </a>
                                         </td>

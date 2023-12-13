@@ -15,6 +15,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::prefix('admin')->group(function () {
     Route::get('/home', [AdminHomeController::class, 'homePage']);
+    Route::get('/users', [AdminHomeController::class, 'usersPage']);
 });
 
 Route::prefix('customer')->group(function () {
