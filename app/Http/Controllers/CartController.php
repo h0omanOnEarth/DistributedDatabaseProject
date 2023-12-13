@@ -15,8 +15,21 @@ class CartController extends Controller
         // Assuming you have a Cart model
         $user = Auth::user();
         $cartItems = Cart::where('users_id', $user->id)->get();
+        $subtotal =  $this->calculateSubtotal($cartItems);
 
-        return view('screens.customer.cart', ['user' => $user, 'cartItems' => $cartItems]);
+        return view('screens.customer.cart', ['user' => $user, 'cartItems' => $cartItems, 'subtotal' => $subtotal]);
+    }
+
+    private function calculateSubtotal($cartItems)
+    {
+        $subtotal = 0;
+
+        foreach ($cartItems as $cartItem) {
+            $product = Product::find($cartItem->products_id);
+            $subtotal += $product->harga * $cartItem->qty;
+        }
+
+        return $subtotal;
     }
 
     public function addToCart(Request $request, $productId)
@@ -43,17 +56,6 @@ class CartController extends Controller
 
         return redirect('customer/cart')->with('success', 'Product added to cart successfully!');
     }
-
-    public function updateCart(Request $request, $cartItemId)
-    {
-        $newQuantity = $request->input('quantity');
-
-        // Update the quantity for the specified cart item
-        Cart::where('id', $cartItemId)->update(['qty' => $newQuantity]);
-
-        return redirect()->route('cart.index')->with('success', 'Cart updated successfully!');
-    }
-
 
     public function removeFromCart($cartItemId)
     {
@@ -106,7 +108,12 @@ class CartController extends Controller
             DB::commit();
 
             // Setelah berhasil diupdate, kembalikan response dengan data qty yang baru
-            return response()->json(['qty' => $newQty]);
+            // Setelah selesai memperbarui quantity, perbarui juga subtotal
+            $user = Auth::user();
+            $cartItems = Cart::where('users_id', $user->id)->get();
+            $subtotal = $this->calculateSubtotal($cartItems);
+
+            return response()->json(['qty' => $newQty, 'subtotal' => $subtotal]);
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi error
             DB::rollback();

@@ -24,7 +24,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('customer')->group(function () {
     Route::get('/home', [CustomerHomeController::class, 'homePage']);
     Route::post('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
-    Route::get('/cart', [CartController::class, 'index']);
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/updateQty', [CartController::class, 'updateQty'])->name('cart.updateQty');
 });
 

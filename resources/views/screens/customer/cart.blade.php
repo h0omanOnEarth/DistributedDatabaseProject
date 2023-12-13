@@ -3,27 +3,41 @@
 @section('content')
     <div class="container mt-5">
         <h2>Your Cart</h2>
-        <div class="row row-cols-1 g-4">
-            @foreach ($cartItems as $cartItem)
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            @php
-                                $product = \App\Models\Product::find($cartItem->products_id);
-                            @endphp
-                            <h5 class="card-title">{{ $product->nama }}</h5>
-                            <p class="card-text">Price: Rp{{ $product->harga }}</p>
-                            <p class="card-text">Qty: <span id="qty_{{ $cartItem->id }}">{{ $cartItem->qty }}</span></p>
-                            <div class="btn-group" role="group" aria-label="Quantity">
-                                <button type="button" class="btn btn-secondary"
-                                    onclick="updateQty({{ $cartItem->id }}, 'decrement', {{ $product->id }})">-</button>
-                                <button type="button" class="btn btn-secondary"
-                                    onclick="updateQty({{ $cartItem->id }}, 'increment', {{ $product->id }})">+</button>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row row-cols-1 g-4">
+                    @foreach ($cartItems as $cartItem)
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    @php
+                                        $product = \App\Models\Product::find($cartItem->products_id);
+                                    @endphp
+                                    <h5 class="card-title">{{ $product->nama }}</h5>
+                                    <p class="card-text">Price: Rp{{ $product->harga }}</p>
+                                    <p class="card-text">Qty: <span id="qty_{{ $cartItem->id }}">{{ $cartItem->qty }}</span>
+                                    </p>
+                                    <div class="btn-group" role="group" aria-label="Quantity">
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="updateQty({{ $cartItem->id }}, 'decrement', {{ $product->id }})">-</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="updateQty({{ $cartItem->id }}, 'increment', {{ $product->id }})">+</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Subtotal</h5>
+                        <p class="card-text" id="subtotal">Rp{{ $subtotal }}</p>
+                        <button class="btn btn-primary">Checkout</button>
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
     </div>
 
@@ -42,6 +56,11 @@
                 success: function(response) {
                     // Update the UI with the new quantity
                     $('#qty_' + cartItemId).text(response.qty);
+
+                    // Update the subtotal only if the response includes a valid subtotal
+                    if (response.hasOwnProperty('subtotal')) {
+                        $('#subtotal').text('Rp' + response.subtotal);
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
