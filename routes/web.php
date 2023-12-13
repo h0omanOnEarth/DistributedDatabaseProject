@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Seller\HomeController as SellerHomeController;
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
@@ -15,8 +16,8 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::prefix('admin')->group(function () {
     Route::get('/home', [AdminHomeController::class, 'homePage']);
-    Route::get('/users', [AdminHomeController::class, 'usersPage']);
-    Route::get('/users/block/{id}', [AdminHomeController::class, 'blockUser']);
+    Route::get('/users', [UserController::class, 'usersPage']);
+    Route::get('/users/block/{id}', [UserController::class, 'blockUser']);
 });
 
 Route::prefix('customer')->group(function () {
