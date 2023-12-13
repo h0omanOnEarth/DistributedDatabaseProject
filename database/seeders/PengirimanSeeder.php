@@ -40,8 +40,6 @@ class PengirimanSeeder extends Seeder
             ],
         ];
 
-        foreach ($pengirimans as $pengiriman) {
-            Pengirimans::create($pengiriman);
-        }
+        Pengirimans::insert($pengirimans);
     }
 }
