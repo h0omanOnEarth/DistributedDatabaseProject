@@ -6,18 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>E-COMMERCE APP</title>
-<<<<<<< HEAD
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-
-=======
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<<<<<<< Updated upstream
-=======
->>>>>>> a2820f2ae4d666b604a0b9b15b50cfd938c13ccc
->>>>>>> Stashed changes
     <style>
         body {
             margin: 0;
@@ -78,14 +70,11 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="">Transactions</a>
-<<<<<<< Updated upstream
-=======
                     </li>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/customer/history') }}">History</a>
->>>>>>> Stashed changes
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
