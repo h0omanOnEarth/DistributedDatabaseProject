@@ -56,7 +56,7 @@ class PengirimanController extends Controller
     {
         // Delete record
         Pengirimans::findOrFail($id)->delete();
-
-        return response()->json(['success' => 'Pengiriman deleted successfully.']);
+        $pengirimanData = Pengirimans::all();
+        return response()->json(['success' => 'Pengiriman deleted successfully.', 'pengirimanData' => $pengirimanData]);
     }
 }

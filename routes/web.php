@@ -47,8 +47,8 @@ Route::prefix('seller')->group(function () {
 
     Route::get('/pengiriman', [PengirimanController::class, 'index'])->name('pengiriman.index');
     Route::post('/pengiriman/store', [PengirimanController::class, 'store'])->name('pengiriman.store');
-    Route::put('/pengiriman/{id}/update', [PengirimanController::class, 'update'])->name('pengiriman.update');
     Route::delete('/pengiriman/{id}', [PengirimanController::class, 'destroy'])->name('pengiriman.destroy');
+    Route::put('/pengiriman/{id}/update', [PengirimanController::class, 'update'])->name('pengiriman.update');
 });
 
 

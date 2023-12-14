@@ -77,7 +77,7 @@
                             '<td>' + pengiriman.lokasi + '</td>' +
                             '<td>' + pengiriman.estimasi + '</td>' +
                             '<td>' +
-                            '<button type="button" class="btn btn-primary" onclick="editPengiriman(' +
+                            '<button type="button" class="btn btn-primary mr-2" onclick="editPengiriman(' +
                             pengiriman.id + ')">Edit</button>' +
                             '<button type="button" class="btn btn-danger" onclick="deletePengiriman(' +
                             pengiriman.id + ')">Delete</button>' +
@@ -85,6 +85,7 @@
                             '</tr>';
                         $('#pengirimanTable tbody').append(row);
                     });
+
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -102,14 +103,31 @@
         function deletePengiriman(id) {
             if (confirm("Are you sure you want to delete this Pengiriman?")) {
                 $.ajax({
-                    url: "{{ url('pengiriman') }}" + '/' + id,
+                    url: "{{ route('pengiriman.destroy', ['id' => ':id']) }}".replace(':id', id),
                     type: 'DELETE',
                     data: {
                         _token: "{{ csrf_token() }}",
                     },
                     success: function(response) {
                         alert(response.success);
+                        // Clear the table body
+                        $('#pengirimanTable tbody').empty();
 
+                        // Append the new data to the table
+                        $.each(response.pengirimanData, function(index, pengiriman) {
+                            var row = '<tr>' +
+                                '<td>' + pengiriman.id + '</td>' +
+                                '<td>' + pengiriman.lokasi + '</td>' +
+                                '<td>' + pengiriman.estimasi + '</td>' +
+                                '<td>' +
+                                '<button type="button" class="btn btn-primary mr-2" onclick="editPengiriman(' +
+                                pengiriman.id + ')">Edit</button>' +
+                                '<button type="button" class="btn btn-danger" onclick="deletePengiriman(' +
+                                pengiriman.id + ')">Delete</button>' +
+                                '</td>' +
+                                '</tr>';
+                            $('#pengirimanTable tbody').append(row);
+                        });
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
