@@ -115,7 +115,7 @@
         <a href="{{ url('/admin/users') }}">Users</a>
         <a href="/admin/products">Products</a>
         <a href="/admin/transactions">Transactions</a>
-        <a href="">Logout</a>
+        <a href="{{ url('/logout') }}">Logout</a>
     </div>
 
     <div class="content">

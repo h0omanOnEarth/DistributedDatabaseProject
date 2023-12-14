@@ -3,7 +3,15 @@
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+<<<<<<< Updated upstream
 use App\Http\Controllers\CartController;
+=======
+<<<<<<< HEAD
+use App\Http\Controllers\Customer\HistoryController;
+=======
+use App\Http\Controllers\CartController;
+>>>>>>> a2820f2ae4d666b604a0b9b15b50cfd938c13ccc
+>>>>>>> Stashed changes
 use App\Http\Controllers\Seller\HomeController as SellerHomeController;
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
 use App\Http\Controllers\ProductController;
@@ -23,10 +31,20 @@ Route::prefix('admin')->group(function () {
 
 Route::prefix('customer')->group(function () {
     Route::get('/home', [CustomerHomeController::class, 'homePage']);
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    Route::get('/history', [HistoryController::class, 'gotohistory']);
+=======
+>>>>>>> Stashed changes
     Route::post('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/updateQty', [CartController::class, 'updateQty'])->name('cart.updateQty');
     Route::post('/cart/deleteItem', [CartController::class, 'deleteItem'])->name('cart.deleteItem');
+<<<<<<< Updated upstream
+=======
+>>>>>>> a2820f2ae4d666b604a0b9b15b50cfd938c13ccc
+>>>>>>> Stashed changes
 });
 
 Route::prefix('seller')->group(function () {
