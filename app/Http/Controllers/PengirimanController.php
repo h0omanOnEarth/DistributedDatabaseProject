@@ -34,6 +34,18 @@ class PengirimanController extends Controller
         return response()->json(['success' => 'Pengiriman added successfully.', 'pengirimanData' => $pengirimanData]);
     }
 
+    public function edit($id)
+    {
+        // Fetch the Pengiriman data by ID
+        $pengiriman = Pengirimans::find($id);
+
+        if (!$pengiriman) {
+            return response()->json(['error' => 'Pengiriman not found.'], 404);
+        }
+
+        return response()->json($pengiriman);
+    }
+
     public function update(Request $request, $id)
     {
         // Validation
@@ -42,14 +54,22 @@ class PengirimanController extends Controller
             'estimasi' => 'required|numeric',
         ]);
 
-        // Update record
-        $pengiriman = Pengirimans::findOrFail($id);
+        // Find the Pengiriman by ID
+        $pengiriman = Pengirimans::find($id);
+
+        if (!$pengiriman) {
+            return response()->json(['error' => 'Pengiriman not found.'], 404);
+        }
+
+        // Update the Pengiriman data
         $pengiriman->update([
             'lokasi' => $request->lokasi,
             'estimasi' => $request->estimasi,
         ]);
 
-        return response()->json(['success' => 'Pengiriman updated successfully.']);
+        // Return success response
+        $pengirimanData = Pengirimans::all();
+        return response()->json(['success' => 'Pengiriman updated successfully.', 'pengirimanData' => $pengirimanData]);
     }
 
     public function destroy($id)
