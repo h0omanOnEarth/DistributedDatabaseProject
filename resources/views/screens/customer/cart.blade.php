@@ -168,25 +168,39 @@
         }
 
         function checkout() {
-            // Mendapatkan data yang diperlukan untuk checkout (misalnya, lokasi dan metode pembayaran)
             var locationId = $('#location').val();
+            var paymentMethod = $('#paymentMethod').val();
 
-            // Mengirim data ke server menggunakan AJAX
             $.ajax({
                 url: "{{ route('cart.checkout') }}",
                 method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
                     location: locationId,
+                    paymentMethod: paymentMethod
                 },
                 success: function(response) {
-                    // Handle response dari server, bisa menampilkan pesan sukses atau memindahkan pengguna ke halaman lain
-                    alert('Checkout successful!'); // Ganti ini dengan respons yang sesuai
-                    window.location.href = "{{ route('cart.index') }}"; // Ganti ini dengan halaman yang sesuai
+                    // Menampilkan SweetAlert setelah transaksi berhasil
+                    Swal.fire({
+                        title: 'Transaksi Berhasil',
+                        text: 'Terima kasih atas pembelian Anda!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        // Jika pengguna mengklik OK, Anda dapat melakukan pengalihan halaman atau tindakan lainnya
+                        if (result.isConfirmed) {
+                            window.location.href = "{{ route('cart.index') }}";
+                        }
+                    });
                 },
                 error: function(xhr, status, error) {
-                    // Handle error, misalnya menampilkan pesan error
-                    alert('Failed to checkout. Please try again.'); // Ganti ini dengan pesan error yang sesuai
+                    // Menampilkan SweetAlert jika terjadi error
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Gagal melakukan transaksi. Silakan coba lagi.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     console.error(error);
                 }
             });
