@@ -68,6 +68,18 @@
                             </select>
                         </div>
 
+                        <!-- Dropdown untuk 'lokasi' -->
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <select class="form-select" id="location">
+                                <!-- Iterasi melalui data lokasi yang diterima dari controller -->
+                                @foreach ($locations as $id => $location)
+                                    <option value="{{ $id }}">{{ $location }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
                         <!-- Kolom-kolom kartu kredit (sembunyikan awalnya) -->
                         <div id="creditCardFields" style="display: none;">
                             <div class="mb-3">
@@ -86,7 +98,8 @@
                         <p class="card-text mt-2">By proceeding with your purchase, you agree to our <a
                                 href="{{ url('/terms-and-conditions') }}" target="_blank">Terms and Conditions</a>.</p>
 
-                        <button class="btn btn-primary">Checkout</button>
+                        <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+
                     </div>
                 </div>
             </div>
@@ -94,7 +107,6 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         function updateQty(cartItemId, action, productId) {
             $.ajax({
@@ -153,6 +165,31 @@
             if (paymentMethod === 'creditCard') {
                 $('#creditCardFields').show();
             }
+        }
+
+        function checkout() {
+            // Mendapatkan data yang diperlukan untuk checkout (misalnya, lokasi dan metode pembayaran)
+            var locationId = $('#location').val();
+
+            // Mengirim data ke server menggunakan AJAX
+            $.ajax({
+                url: "{{ route('cart.checkout') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    location: locationId,
+                },
+                success: function(response) {
+                    // Handle response dari server, bisa menampilkan pesan sukses atau memindahkan pengguna ke halaman lain
+                    alert('Checkout successful!'); // Ganti ini dengan respons yang sesuai
+                    window.location.href = "{{ route('cart.index') }}"; // Ganti ini dengan halaman yang sesuai
+                },
+                error: function(xhr, status, error) {
+                    // Handle error, misalnya menampilkan pesan error
+                    alert('Failed to checkout. Please try again.'); // Ganti ini dengan pesan error yang sesuai
+                    console.error(error);
+                }
+            });
         }
     </script>
 @endsection

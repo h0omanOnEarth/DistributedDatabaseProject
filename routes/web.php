@@ -29,6 +29,7 @@ Route::prefix('customer')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/updateQty', [CartController::class, 'updateQty'])->name('cart.updateQty');
     Route::post('/cart/deleteItem', [CartController::class, 'deleteItem'])->name('cart.deleteItem');
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 
 Route::prefix('seller')->group(function () {

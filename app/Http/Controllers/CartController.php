@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\Dtrans;
+use App\Models\Htrans;
+use App\Models\Pengirimans;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +19,9 @@ class CartController extends Controller
         $user = Auth::user();
         $cartItems = Cart::where('users_id', $user->id)->get();
         $subtotal =  $this->calculateSubtotal($cartItems);
+        $locations = Pengirimans::pluck('lokasi', 'id');
 
-        return view('screens.customer.cart', ['user' => $user, 'cartItems' => $cartItems, 'subtotal' => $subtotal]);
+        return view('screens.customer.cart', ['user' => $user, 'cartItems' => $cartItems, 'subtotal' => $subtotal, 'locations' => $locations]);
     }
 
     private function calculateSubtotal($cartItems)
@@ -135,6 +139,73 @@ class CartController extends Controller
         } catch (\Exception $e) {
             // Tangani kesalahan jika terjadi
             return response()->json(['error' => 'Failed to delete item from cart.'], 500);
+        }
+    }
+
+    public function checkout(Request $request)
+    {
+        // Mendapatkan data dari cart
+        $user = Auth::user();
+        $cartItems = Cart::where('users_id', $user->id)->get();
+
+        // Memeriksa ketersediaan stok
+        foreach ($cartItems as $cartItem) {
+            $product = Product::find($cartItem->products_id);
+            if ($product->stok - $cartItem->qty < 0) {
+                // Jika stok tidak mencukupi, kembalikan response error
+                return response()->json(['error' => 'Not enough stock for product ' . $product->nama], 400);
+            }
+        }
+
+        // Memproses checkout
+        DB::beginTransaction();
+
+        try {
+            // Membuat kode transaksi berdasarkan format tanggal dan urutan
+            $transCode = date('Ymd') . sprintf('%04d', Htrans::count() + 1);
+
+            // Menghitung subtotal
+            $subtotal = $this->calculateSubtotal($cartItems);
+
+            // Mengambil data lokasi dari request
+            $locationId = $request->input('location');
+
+            // Menyimpan ke tabel htrans
+            Htrans::create([
+                'kode' => $transCode,
+                'subtotal' => $subtotal,
+                'status' => 'pending', // Anda bisa mengganti status sesuai kebutuhan
+                'pengirimans_id' => $locationId,
+                'users_id' => $user->id,
+
+            ]);
+
+            // Menyimpan ke tabel dtrans
+            foreach ($cartItems as $cartItem) {
+                Dtrans::create([
+                    'htrans_kode' => $transCode,
+                    'products_id' => $cartItem->products_id,
+                    'qty' => $cartItem->qty,
+                ]);
+
+                // Mengurangi stok di tabel products
+                $product = Product::find($cartItem->products_id);
+                $product->update(['stok' => $product->stok - $cartItem->qty]);
+
+                // Remove item from the cart only if it's successfully checked out
+                Cart::where('id', $cartItem->id)->delete();
+            }
+
+            DB::commit();
+
+            // Setelah berhasil checkout, kembalikan response sukses
+            return response()->json(['success' => 'Checkout successful'], 200);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi error
+            DB::rollback();
+
+            // Handle error, misalnya log atau kirim response error
+            return response()->json(['error' => 'Failed to checkout. ' . $e->getMessage()], 500);
         }
     }
 }
