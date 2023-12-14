@@ -30,7 +30,7 @@ class AuthController extends Controller
             if ($user->role == 'customer') {
                 return redirect('/customer/home');
             } elseif ($user->role == 'seller') {
-                return redirect('/seller/home');
+                return redirect('/seller/products');
             } elseif ($user->role == 'admin') {
                 return redirect('/admin/home');
             }

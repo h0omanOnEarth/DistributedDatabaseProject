@@ -7,6 +7,7 @@ use App\Http\Controllers\Customer\HistoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Seller\HomeController as SellerHomeController;
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
+use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,11 @@ Route::prefix('seller')->group(function () {
     Route::get('/products/update/{id}', [ProductController::class, 'gotoupdateproduct']);
     Route::put('/products/update/{id}', [ProductController::class, 'updateProduct']);
     Route::get('/products/delete/{id}', [ProductController::class, 'deleteProduct']);
+
+    Route::get('/pengiriman', [PengirimanController::class, 'index'])->name('pengiriman.index');
+    Route::post('/pengiriman/store', [PengirimanController::class, 'store'])->name('pengiriman.store');
+    Route::put('/pengiriman/{id}/update', [PengirimanController::class, 'update'])->name('pengiriman.update');
+    Route::delete('/pengiriman/{id}', [PengirimanController::class, 'destroy'])->name('pengiriman.destroy');
 });
 
 

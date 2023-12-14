@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>E-COMMERCE APP</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <style>
         body {
@@ -43,6 +44,9 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/seller/products') }}">Produk</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/seller/pengiriman') }}">Locations</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
