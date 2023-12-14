@@ -58,9 +58,34 @@
                             your favorite items delivered to your doorstep without any additional cost.
                         </p>
 
+
+                        <!-- Tambahkan dropdown untuk metode pembayaran -->
+                        <div class="mb-3">
+                            <label for="paymentMethod" class="form-label">Payment Method</label>
+                            <select class="form-select" id="paymentMethod" onchange="togglePaymentFields()">
+                                <option value="cash">Cash on Delivery</option>
+                                <option value="creditCard">Credit Card</option>
+                            </select>
+                        </div>
+
+                        <!-- Kolom-kolom kartu kredit (sembunyikan awalnya) -->
+                        <div id="creditCardFields" style="display: none;">
+                            <div class="mb-3">
+                                <label for="cardNumber" class="form-label">Card Number</label>
+                                <input type="text" class="form-control" id="cardNumber"
+                                    placeholder="Enter your card number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="expiryDate" class="form-label">Expiry Date</label>
+                                <input type="text" class="form-control" id="expiryDate" placeholder="MM/YYYY">
+                            </div>
+                            <!-- Tambahkan kolom lainnya seperti CVV, nama pada kartu, dsb. sesuai kebutuhan -->
+                        </div>
+
                         <!-- Tambahkan paragraf terms and conditions -->
                         <p class="card-text mt-2">By proceeding with your purchase, you agree to our <a
                                 href="{{ url('/terms-and-conditions') }}" target="_blank">Terms and Conditions</a>.</p>
+
                         <button class="btn btn-primary">Checkout</button>
                     </div>
                 </div>
@@ -116,6 +141,18 @@
                     console.error(error);
                 }
             });
+        }
+
+        function togglePaymentFields() {
+            var paymentMethod = $('#paymentMethod').val();
+
+            // Sembunyikan semua kolom pembayaran terlebih dahulu
+            $('#creditCardFields').hide();
+
+            // Tampilkan kolom yang sesuai dengan metode pembayaran yang dipilih
+            if (paymentMethod === 'creditCard') {
+                $('#creditCardFields').show();
+            }
         }
     </script>
 @endsection
