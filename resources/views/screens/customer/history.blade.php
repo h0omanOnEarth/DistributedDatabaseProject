@@ -22,7 +22,13 @@
                             <td>{{ DB::table('pengirimans')->where('id', $item->pengirimans_id)->first()->lokasi }}</td>
                             <td>{{ "Rp. " . number_format($item->subtotal, 0) }}</td>
                             <td>{{ $item->status }}</td>
-                            <td>{{ $item->ctr_estimasi . " hari lagi sampai" }}</td>
+                            <td>
+                                @if ($item->ctr_estimasi != 0)
+                                    {{ $item->ctr_estimasi . " hari lagi sampai" }}
+                                @else
+                                    Delivered
+                                @endif
+                            </td>
                             <td>
                                 <button class="btn btn-secondary" type="button" data-toggle="collapse"
                                     data-target=".collapse{{ $item->kode }}" aria-expanded="false"
