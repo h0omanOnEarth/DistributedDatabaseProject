@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -13,7 +14,42 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         $items = Product::get();
-        return view('screens.seller.master_products', ["user" => $user, "items" => $items]);
+        $itemsB = DB::connection('oracle_b')->select("SELECT * FROM products");
+        $itemsC = DB::connection('oracle_c')->select("SELECT * FROM products");
+
+        $products = [];
+        foreach ($items as $item) {
+            if(isset($products[$item->nama])){
+                $products[$item->nama]['stok'] += $item->stok;
+            }
+            else{
+                $products[$item->nama] = [];
+                $products[$item->nama]['id'] = $item->id;
+                $products[$item->nama]['stok'] = $item->stok;
+                $products[$item->nama]['stokB'] = 0;
+                $products[$item->nama]['stokC'] = 0;
+                $products[$item->nama]['harga'] = $item->harga;
+
+            }
+        }
+        foreach ($itemsB as $item) {
+            if(isset($products[$item->nama])){
+                $products[$item->nama]['stokB'] += $item->stok;
+            }
+            else{
+                //DO NOTHING
+            }
+        }
+
+        foreach ($itemsC as $item) {
+            if(isset($products[$item->nama])){
+                $products[$item->nama]['stokC'] += $item->stok;
+            }
+            else{
+               //DO NOTHING
+            }
+        }
+        return view('screens.seller.master_products', ["user" => $user,"products"=>$products]);
     }
 
     public function addProduct(Request $request)

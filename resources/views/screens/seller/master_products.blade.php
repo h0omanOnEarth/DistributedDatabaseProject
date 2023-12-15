@@ -50,26 +50,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($items as $item)
+                    @foreach ($products as $productName => $productData)
                         <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->harga }}</td>
-                            <td>{{ $item->stok }}</td>
+                            <td>{{ $productData['id'] }}</td>
+                            <td>{{ $productName }}</td>
+                            <td>{{ $productData['harga'] }}</td>
+                            <td>cabang A: {{ $productData['stok'] }}, cabang B: {{ $productData['stokB'] }}, cabang C:
+                                {{ $productData['stokC'] }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a href="{{ url('/seller/products/update/' . $item->id) }}">
+                                    <a href="{{ url('/seller/products/update/' . $productData['id']) }}">
                                         <button type="button" class="btn btn-dark buttonsubmit"
                                             name="btnupdate">Update</button>
                                     </a>
-                                    <a href="{{ url('/seller/products/delete/' . $item->id) }}">
+                                    <a href="{{ url('/seller/products/delete/' . $productData['id']) }}">
                                         <button type="button" class="btn btn-dark buttonsubmit"
                                             name="btndelete">Delete</button>
                                     </a>
-                                    <a href="{{ url('/seller/products/delete/' . $item->id) }}">
-                                        <button type="button" class="btn btn-light buttonsubmit" name="btndelete">Ambil
-                                            stok cabang lain</button>
-                                    </a>
+                                    <form action="{{ url('/seller/products/getStock/'.$productData['id']) }}" method="POST">
+                                        @csrf
+                                        <input type="number" class="form-control" name="stock_quantity" placeholder="Jumlah"
+                                        required  style="max-width: 100px;">
+                                        <a href="{{ url('/seller/products/other-action/' . $productData['id']) }}">
+                                            <button type="button" class="btn btn-light buttonsubmit" name="btnother">Ambil stok
+                                                cabang lain</button>
+                                        </a>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
