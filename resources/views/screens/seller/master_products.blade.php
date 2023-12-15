@@ -67,14 +67,14 @@
                                         <button type="button" class="btn btn-dark buttonsubmit"
                                             name="btndelete">Delete</button>
                                     </a>
-                                    <form action="{{ url('/seller/products/getStock/'.$productData['id']) }}" method="POST">
+                                    <form action="{{ url('/seller/products/getStock') }}" method="POST">
                                         @csrf
-                                        <input type="number" class="form-control" name="stock_quantity" placeholder="Jumlah"
-                                        required  style="max-width: 100px;">
-                                        <a href="{{ url('/seller/products/other-action/' . $productData['id']) }}">
-                                            <button type="button" class="btn btn-light buttonsubmit" name="btnother">Ambil stok
-                                                cabang lain</button>
-                                        </a>
+                                        <input type="hidden" name="id" value="{{ $productData['id'] }}">
+                                        <input type="number" class="form-control" name="stock_quantity"
+                                            placeholder="Jumlah" required style="max-width: 100px;">
+                                        <button type="submit" class="btn btn-light buttonsubmit" name="btnother">Ambil stok
+                                            cabang lain</button>
+
                                     </form>
                                 </div>
                             </td>
