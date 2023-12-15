@@ -79,8 +79,8 @@ class ProductController extends Controller
                 if (!empty($itemsC) && count($itemsC) > 0) {
                     $productC = $itemsC[0];
                     $stockAvailableB = $stockAvailable;
-                    $stockAvailable += $productC->stock;
-                    if ($stockAvailable >= $amount) {
+                    $stockAvailable += $productC->stok;
+                    if($stockAvailable >= $amount){
                         //ambil dari C & branch C
                         //kurangi yang B dulu
                         $newStockB = $amount - $stockAvailableB;
@@ -94,7 +94,7 @@ class ProductController extends Controller
                         DB::connection('oracle_b')->raw('commit;');
 
                         //kurangi C
-                        $newStockC = $productC->stock - ($amount - $stockAvailableB);
+                        $newStockC = $productC->stok - ($amount - $stockAvailableB);
                         DB::connection('oracle_c')
                             ->table('products')
                             ->where('nama', $productName)
