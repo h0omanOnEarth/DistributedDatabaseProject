@@ -56,16 +56,3 @@ Route::prefix('seller')->group(function () {
     Route::put('/pengiriman/{id}/update', [PengirimanController::class, 'update'])->name('pengiriman.update');
     Route::get('/pengiriman/{id}', [PengirimanController::class, 'edit'])->name('pengiriman.edit');
 });
-
-
-Route::get('/admin/products', function () {
-    return view('screens\admin\manage_products', [
-        "title" => "Project DD | Manage Products",
-    ]);
-});
-
-Route::get('/admin/transactions', function () {
-    return view('screens\admin\manage_transactions', [
-        "title" => "Project DD | Manage Transaksi",
-    ]);
-});

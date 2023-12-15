@@ -13,7 +13,7 @@ class TransactionController extends Controller
     public function transactionsPage()
     {
         $user = Auth::user();
-        dd($user);
-        // return view('screens.admin.manage_transactions', ["user" => $user]);
+        $htrans = Htrans::get();
+        return view('screens.admin.manage_transactions', ["user" => $user, "htrans" => $htrans]);
     }
 }

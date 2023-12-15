@@ -21,7 +21,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Tambahkan data sesuai dengan yang dimiliki -->
                                 <tr>
                                     <td>Product 1</td>
                                     <td>Description 1</td>
