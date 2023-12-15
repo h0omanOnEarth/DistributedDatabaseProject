@@ -11,6 +11,7 @@
                         <th scope="col">Lokasi</th>
                         <th scope="col">Subtotal</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Estimasi</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -19,18 +20,26 @@
                         <tr>
                             <td>{{ $item->kode }}</td>
                             <td>{{ DB::table('pengirimans')->where('id', $item->pengirimans_id)->first()->lokasi }}</td>
-                            <td>{{ $item->subtotal }}</td>
+                            <td>{{ "Rp. " . number_format($item->subtotal, 0) }}</td>
                             <td>{{ $item->status }}</td>
+                            <td>{{ $item->ctr_estimasi . " hari lagi sampai" }}</td>
                             <td>
                                 <button class="btn btn-secondary" type="button" data-toggle="collapse"
                                     data-target=".collapse{{ $item->kode }}" aria-expanded="false"
                                     aria-controls="collapse{{ $item->kode }}">
-                                    <i class="bi bi-chevron-down"></i>
+                                    Detail Pesanan <i class="bi bi-chevron-down"></i>
                                 </button>
+                                @if ($item->ctr_estimasi == 0 && $item->status != "done")
+                                <a href="{{ route('konfirmasiOrder', ['kode' => $item->kode]) }}">
+                                    <button class="btn btn-secondary" type="button">
+                                        Konfirmasi Order
+                                    </button>
+                                </a>
+                                @endif
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="5">
+                            <td colspan="6">
                                 <div class="collapse collapse{{ $item->kode }}">
                                     <table class="table table-dark">
                                         <thead>

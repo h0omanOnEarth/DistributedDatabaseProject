@@ -7,6 +7,7 @@ use App\Http\Controllers\Customer\HistoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Seller\HomeController as SellerHomeController;
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
+use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('customer')->group(function () {
     Route::get('/home', [CustomerHomeController::class, 'homePage']);
     Route::get('/history', [HistoryController::class, 'gotohistory']);
+    Route::get('/history/konfirmasiOrder/{kode}', [OrderController::class, 'konfirmasiOrder'])->name('konfirmasiOrder');
     Route::post('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/updateQty', [CartController::class, 'updateQty'])->name('cart.updateQty');

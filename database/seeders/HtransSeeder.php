@@ -18,9 +18,10 @@ class HtransSeeder extends Seeder
             [
                 "kode" => "ABC123",
                 "subtotal" => 100000,
-                "status" => "ongoing",
+                "status" => "belum bayar",
                 "pengirimans_id" => 1,
                 "users_id" => 4,
+                "ctr_estimasi" => 2,
             ],
             [
                 "kode" => "ABC124",
@@ -28,6 +29,7 @@ class HtransSeeder extends Seeder
                 "status" => "delivery",
                 "pengirimans_id" => 2,
                 "users_id" => 4,
+                "ctr_estimasi" => 2,
             ],
             [
                 "kode" => "ABC125",
@@ -35,6 +37,7 @@ class HtransSeeder extends Seeder
                 "status" => "done",
                 "pengirimans_id" => 3,
                 "users_id" => 4,
+                "ctr_estimasi" => 0,
             ],
         ];
 

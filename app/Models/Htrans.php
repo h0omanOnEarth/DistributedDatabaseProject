@@ -11,5 +11,5 @@ class Htrans extends Model
     public $primaryKey = 'kode';
     public $incrementing = false;
     public $timestamps = true;
-    public $fillable = ['kode', 'subtotal', 'status', 'pengirimans_id', 'users_id'];
+    public $fillable = ['kode', 'subtotal', 'status', 'pengirimans_id', 'users_id', 'ctr_estimasi'];
 }

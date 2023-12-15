@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('status');
             $table->foreignId('pengirimans_id')->constrained();
             $table->foreignId('users_id')->constrained();
+            $table->integer('ctr_estimasi');
             $table->timestamps();
         });
     }
