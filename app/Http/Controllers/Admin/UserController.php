@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -31,6 +32,7 @@ class UserController extends Controller
             $message = 'User successfully unblocked!';
         }
         $user->save();
+        DB::raw('commit;');
         return back()->with('success', $message);
     }
 }
