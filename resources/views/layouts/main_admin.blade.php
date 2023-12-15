@@ -115,7 +115,7 @@
         <a class="{{ request()->is('admin/users*') ? 'active' : '' }}" href="{{ url('/admin/users') }}">Users</a>
         <a class="{{ request()->is('admin/products*') ? 'active' : '' }}" href="/admin/products">Products</a>
         <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}"
-            href="/admin/transactions">Transactions</a>
+            href="{{ url('/admin/transactions') }}">Transactions</a>
         <a class="{{ request()->is('logout') ? 'active' : '' }}" href="{{ url('/logout') }}">Logout</a>
     </div>
 
