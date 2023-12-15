@@ -28,6 +28,7 @@ Route::prefix('customer')->group(function () {
     Route::get('/home', [CustomerHomeController::class, 'homePage']);
     Route::get('/history', [HistoryController::class, 'gotohistory']);
     Route::get('/history/konfirmasiOrder/{kode}', [OrderController::class, 'konfirmasiOrder'])->name('konfirmasiOrder');
+    Route::get('/history/bayarOrder/{kode}', [OrderController::class, 'bayarOrder'])->name('bayarOrder');
     Route::post('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/updateQty', [CartController::class, 'updateQty'])->name('cart.updateQty');

@@ -15,4 +15,12 @@ class OrderController extends Controller
 
         return back();
     }
+
+    public function bayarOrder($kode){
+        $htrans = Htrans::where('kode', $kode)->first();
+        $htrans->status = "delivery";
+        $htrans->save();
+
+        return back();
+    }
 }

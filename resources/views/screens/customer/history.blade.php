@@ -29,6 +29,13 @@
                                     aria-controls="collapse{{ $item->kode }}">
                                     Detail Pesanan <i class="bi bi-chevron-down"></i>
                                 </button>
+                                @if ($item->status == "belum bayar")
+                                <a href="{{ route('bayarOrder', ['kode' => $item->kode]) }}">
+                                    <button class="btn btn-secondary" type="button">
+                                        Bayar
+                                    </button>
+                                </a>
+                                @endif
                                 @if ($item->ctr_estimasi == 0 && $item->status != "done")
                                 <a href="{{ route('konfirmasiOrder', ['kode' => $item->kode]) }}">
                                     <button class="btn btn-secondary" type="button">
