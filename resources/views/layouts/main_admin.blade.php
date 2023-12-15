@@ -107,13 +107,15 @@
 <body>
     <div class="navbar">
         <span>Welcome Back, {{ $user->name }}</span>
+        {{-- <span>Welcome Back, {{ Auth::user()->name }}</span> --}}
         <a href="#profile">Profile</a>
     </div>
 
     <div class="sidebar">
         <a class="{{ request()->is('admin/home') ? 'active' : '' }}" href="{{ url('/admin/home') }}">Home</a>
         <a class="{{ request()->is('admin/users*') ? 'active' : '' }}" href="{{ url('/admin/users') }}">Users</a>
-        <a class="{{ request()->is('admin/products*') ? 'active' : '' }}" href="/admin/products">Products</a>
+        <a class="{{ request()->is('admin/products*') ? 'active' : '' }}"
+            href="{{ url('/admin/products') }}">Products</a>
         <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}"
             href="{{ url('/admin/transactions') }}">Transactions</a>
         <a class="{{ request()->is('logout') ? 'active' : '' }}" href="{{ url('/logout') }}">Logout</a>

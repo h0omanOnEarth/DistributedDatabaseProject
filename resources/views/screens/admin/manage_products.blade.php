@@ -4,7 +4,6 @@
 @section('manage_products')
     <div class="container mt-5">
         <div class="row">
-            <!-- Card untuk menampilkan daftar dalam bentuk tabel -->
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Customer\HistoryController;
@@ -21,6 +22,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/home', [AdminHomeController::class, 'homePage']);
     Route::get('/users', [UserController::class, 'usersPage']);
     Route::get('/users/block/{id}', [UserController::class, 'blockUser']);
+    Route::get('/transactions', [TransactionController::class, 'transactionsPage']);
 });
 
 Route::prefix('customer')->group(function () {
