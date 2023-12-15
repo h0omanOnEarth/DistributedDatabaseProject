@@ -29,7 +29,7 @@ class HtransSeeder extends Seeder
                 "status" => "delivery",
                 "pengirimans_id" => 2,
                 "users_id" => 4,
-                "ctr_estimasi" => 2,
+                "ctr_estimasi" => 0,
             ],
             [
                 "kode" => "ABC125",
