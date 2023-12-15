@@ -1,4 +1,3 @@
-{{-- halaman manage products --}}
 @extends('layouts.main_admin')
 
 @section('manage_products')
@@ -8,32 +7,24 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Products List</h5>
-                        <div class="mb-3">
-                            <input type="text" class="form-control" id="searchBar" placeholder="Search">
-                        </div>
-                        <table class="table">
+                        <table class="table table-dark">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Nama Produk</th>
+                                    <th scope="col">Harga Produk</th>
+                                    <th scope="col">Stok Produk</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Product 1</td>
-                                    <td>Description 1</td>
-                                    <td>Category 1</td>
-                                    <td>Price 1</td>
-                                </tr>
-                                <tr>
-                                    <td>Product 2</td>
-                                    <td>Description 2</td>
-                                    <td>Category 2</td>
-                                    <td>Price 2</td>
-                                </tr>
-                                <!-- Tambahkan data lainnya di sini -->
+                                @foreach ($items as $item)
+                                    <tr>
+                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item->nama }}</td>
+                                        <td>{{ $item->harga }}</td>
+                                        <td>{{ $item->stok }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

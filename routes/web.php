@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
@@ -24,6 +25,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/users', [UserController::class, 'usersPage']);
     Route::get('/users/block/{id}', [UserController::class, 'blockUser']);
     Route::get('/transactions', [TransactionController::class, 'transactionsPage']);
+    Route::get('/products', [AdminProductController::class, 'productsPage']);
 });
 
 Route::prefix('customer')->group(function () {
