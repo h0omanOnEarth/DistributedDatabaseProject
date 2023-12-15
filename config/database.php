@@ -107,6 +107,20 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
+        'oracle_b' => [
+            'driver' => 'oracle',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_B', 'localhost'),
+            'port' => env('DB_PORT_B', '1433'),
+            'database' => env('DB_DATABASE_B', 'forge'),
+            'username' => env('DB_USERNAME_B', 'forge'),
+            'password' => env('DB_PASSWORD_B', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
+            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+        ],
         'oracle_c' => [
             'driver' => 'oracle',
             'url' => env('DATABASE_URL'),
@@ -121,6 +135,7 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
+
 
     ],
 
