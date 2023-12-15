@@ -66,6 +66,10 @@
                                         <button type="button" class="btn btn-dark buttonsubmit"
                                             name="btndelete">Delete</button>
                                     </a>
+                                    <a href="{{ url('/seller/products/delete/' . $item->id) }}">
+                                        <button type="button" class="btn btn-light buttonsubmit" name="btndelete">Ambil
+                                            stok cabang lain</button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

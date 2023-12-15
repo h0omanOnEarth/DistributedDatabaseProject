@@ -4,7 +4,6 @@
 @section('manage_transactions')
     <div class="container mt-5">
         <div class="row">
-            <!-- Card untuk menampilkan daftar dalam bentuk tabel -->
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
@@ -31,7 +30,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Tambahkan data sesuai dengan yang dimiliki -->
                                 <tr>
                                     <td>Product 1</td>
                                     <td>Description 1</td>
@@ -44,7 +42,6 @@
                                     <td>Category 2</td>
                                     <td>Price 2</td>
                                 </tr>
-                                <!-- Tambahkan data lainnya di sini -->
                             </tbody>
                         </table>
                     </div>
