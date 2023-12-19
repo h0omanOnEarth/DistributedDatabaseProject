@@ -31,7 +31,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/cronjob_manual', [CronJobController::class, 'index']);
     Route::post('/cronjob_manual', [CronJobController::class, 'create'])->name('create.cronjob');
     Route::get('/products', [AdminProductController::class, 'productsPage']);
-    Route::get('/products/sync', [ProductController::class, 'sync'])->name('products.sync');
 });
 
 Route::prefix('customer')->group(function () {
@@ -49,7 +48,7 @@ Route::prefix('customer')->group(function () {
 Route::prefix('seller')->group(function () {
     Route::get('/home', [SellerHomeController::class, 'homePage']);
 
-    Route::get('/products', [ProductController::class, 'gotoproducts']);
+    Route::get('/products', [ProductController::class, 'gotoproducts'])->name('products.getProducts');
     Route::post('/products', [
         ProductController::class,
         'addProduct'

@@ -241,12 +241,83 @@ class ProductController extends Controller
                     ]);
                     DB::connection('oracle_b')->commit();
                 }
+
+                // Cek apakah produk dengan nama yang sama sudah ada di koneksi C
+                $productC = DB::connection('oracle_c')->table('products')->where('nama', $productA->nama)->first();
+
+                // Jika tidak ada, tambahkan produk ke koneksi C dengan stok 0
+                if (!$productC) {
+                    DB::connection('oracle_c')->table('products')->insert([
+                        'id' => $productA->id,
+                        'nama' => $productA->nama,
+                        'harga' => $productA->harga,
+                        'stok' => 0,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    DB::connection('oracle_c')->commit();
+                }
+            }
+
+            // Lakukan hal yang sama untuk koneksi B
+            $productsB = DB::connection('oracle_b')->table('products')->get();
+            foreach ($productsB as $productB) {
+                // Cek apakah produk dengan nama yang sama sudah ada di koneksi A
+                $productA = DB::connection('oracle')->table('products')->where('nama', $productB->nama)->first();
+
+                // Jika tidak ada, tambahkan produk ke koneksi A dengan stok 0
+                if (!$productA) {
+                    DB::connection('oracle')->table('products')->insert([
+                        'id' => $productB->id,
+                        'nama' => $productB->nama,
+                        'harga' => $productB->harga,
+                        'stok' => 0, // Stok diatur menjadi 0
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    DB::connection('oracle')->commit();
+                }
+
+                // Cek apakah produk dengan nama yang sama sudah ada di koneksi C
+                $productC = DB::connection('oracle_c')->table('products')->where('nama', $productB->nama)->first();
+
+                // Jika tidak ada, tambahkan produk ke koneksi C dengan stok 0
+                if (!$productC) {
+                    DB::connection('oracle_c')->table('products')->insert([
+                        'id' => $productB->id,
+                        'nama' => $productB->nama,
+                        'harga' => $productB->harga,
+                        'stok' => 0,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    DB::connection('oracle_c')->commit();
+                }
             }
 
             // Lakukan hal yang sama untuk koneksi C
             $productsC = DB::connection('oracle_c')->table('products')->get();
             foreach ($productsC as $productC) {
+                // Cek apakah produk dengan nama yang sama sudah ada di koneksi A
+                $productA = DB::connection('oracle')->table('products')->where('nama', $productC->nama)->first();
+
+                // Jika tidak ada, tambahkan produk ke koneksi A dengan stok 0
+                if (!$productA) {
+                    DB::connection('oracle')->table('products')->insert([
+                        'id' => $productC->id,
+                        'nama' => $productC->nama,
+                        'harga' => $productC->harga,
+                        'stok' => 0,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    DB::connection('oracle')->commit();
+                }
+
+                // Cek apakah produk dengan nama yang sama sudah ada di koneksi B
                 $productB = DB::connection('oracle_b')->table('products')->where('nama', $productC->nama)->first();
+
+                // Jika tidak ada, tambahkan produk ke koneksi B dengan stok 0
                 if (!$productB) {
                     DB::connection('oracle_b')->table('products')->insert([
                         'id' => $productC->id,
@@ -260,7 +331,41 @@ class ProductController extends Controller
                 }
             }
 
-            return response()->json(['message' => 'Manual sync completed'], 200);
+            $user = Auth::user();
+            $items = Product::get();
+            $itemsB = ProductViewB::all();
+            $itemsC = ProductViewC::all();
+
+            $products = [];
+            foreach ($items as $item) {
+                if (isset($products[$item->nama])) {
+                    $products[$item->nama]['stok'] += $item->stok;
+                } else {
+                    $products[$item->nama] = [];
+                    $products[$item->nama]['id'] = $item->id;
+                    $products[$item->nama]['stok'] = $item->stok;
+                    $products[$item->nama]['stokB'] = 0;
+                    $products[$item->nama]['stokC'] = 0;
+                    $products[$item->nama]['harga'] = $item->harga;
+                }
+            }
+            foreach ($itemsB as $item) {
+                if (isset($products[$item->nama])) {
+                    $products[$item->nama]['stokB'] += $item->stok;
+                } else {
+                    //DO NOTHING
+                }
+            }
+
+            foreach ($itemsC as $item) {
+                if (isset($products[$item->nama])) {
+                    $products[$item->nama]['stokC'] += $item->stok;
+                } else {
+                    //DO NOTHING
+                }
+            }
+
+            return response()->json(['message' => 'Manual sync completed', "user" => $user, "products" => $products], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error during sync: ' . $e->getMessage()], 500);
         }

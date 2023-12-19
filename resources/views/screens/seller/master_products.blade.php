@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <table class="table table-dark">
+            <table class="table table-dark" id="productTable">
                 <thead>
                     <tr>
                         <th scope="col">id</th>
@@ -97,6 +97,40 @@
 
     <script>
         $(document).ready(function() {
+            // Function to refresh the table
+            function refreshTable(products) {
+                var tbody = $('#productTable tbody');
+                tbody.empty();
+
+                $.each(products, function(productName, product) {
+                    var row = '<tr>' +
+                        '<td>' + product.id + '</td>' +
+                        '<td>' + productName + '</td>' +
+                        '<td>' + product.harga + '</td>' +
+                        '<td>cabang A: ' + product.stok + ', cabang B: ' + product.stokB + ', cabang C: ' +
+                        product.stokC +
+                        '</td>' +
+                        '<td>' +
+                        '<div class="btn-group" role="group">' +
+                        '<a href="{{ url('/seller/products/update') }}/' + product.id + '">' +
+                        '<button type="button" class="btn btn-dark buttonsubmit" name="btnupdate">Update</button>' +
+                        '</a>' +
+                        '<a href="{{ url('/seller/products/delete') }}/' + product.id + '">' +
+                        '<button type="button" class="btn btn-dark buttonsubmit" name="btndelete">Delete</button>' +
+                        '</a>' +
+                        '<form action="{{ url('/seller/products/getStock') }}" method="POST">' +
+                        '@csrf' +
+                        '<input type="hidden" name="id" value="' + product.id + '">' +
+                        '<input type="number" class="form-control" name="stock_quantity" placeholder="Jumlah" required style="max-width: 100px;">' +
+                        '<button type="submit" class="btn btn-light buttonsubmit" name="btnother">Ambil stok cabang lain</button>' +
+                        '</form>' +
+                        '</div>' +
+                        '</td>' +
+                        '</tr>';
+                    tbody.append(row);
+                });
+            }
+
             // AJAX request using jQuery
             $('#syncButton').click(function() {
                 $.ajax({
@@ -105,8 +139,13 @@
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     },
+                    dataType: 'json', // Make sure to specify the expected data type
                     success: function(response) {
+                        console.log(response);
                         alert(response.message);
+
+                        // If the sync is successful, refresh the table with updated data
+                        refreshTable(response.products);
                     },
                     error: function(error) {
                         console.error('Error during sync:', error);
@@ -116,4 +155,5 @@
             });
         });
     </script>
+
 @endsection

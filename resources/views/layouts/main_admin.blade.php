@@ -125,7 +125,7 @@
             href="{{ url('/admin/products') }}">Products</a>
         <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}"
             href="{{ url('/admin/transactions') }}">Transactions</a>
-        <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}"
+        <a class="{{ request()->is('admin/cronjob_manual*') ? 'active' : '' }}"
             href="{{ url('/admin/logs') }}">AUTOMATIC LOGS</a>
         <a class="{{ request()->is('logout') ? 'active' : '' }}" href="{{ url('/logout') }}">Logout</a>
     </div>
