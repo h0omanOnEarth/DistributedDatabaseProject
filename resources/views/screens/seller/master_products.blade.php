@@ -11,8 +11,8 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
     @if (session('failed'))
-    <div class="alert alert-danger">{{ session('failed') }}</div>
-@endif
+        <div class="alert alert-danger">{{ session('failed') }}</div>
+    @endif
 
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -41,7 +41,14 @@
     <br>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2>Products</h2>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Products</h2>
+                <!-- Button Sync -->
+                <div class="mb-3">
+                    <button id="syncButton" type="button" class="btn btn-primary">Sync</button>
+                </div>
+            </div>
+
             <table class="table table-dark">
                 <thead>
                     <tr>
@@ -87,4 +94,26 @@
             </table>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            // AJAX request using jQuery
+            $('#syncButton').click(function() {
+                $.ajax({
+                    url: "{{ route('products.sync') }}",
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    success: function(response) {
+                        alert(response.message);
+                    },
+                    error: function(error) {
+                        console.error('Error during sync:', error);
+                        alert('Failed to sync products');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

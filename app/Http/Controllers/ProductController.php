@@ -80,7 +80,7 @@ class ProductController extends Controller
                     $productC = $itemsC[0];
                     $stockAvailableB = $stockAvailable;
                     $stockAvailable += $productC->stok;
-                    if($stockAvailable >= $amount){
+                    if ($stockAvailable >= $amount) {
                         //ambil dari C & branch C
                         //kurangi yang B dulu
                         $newStockB = $amount - $stockAvailableB;
@@ -190,5 +190,53 @@ class ProductController extends Controller
         DB::raw('commit;');
 
         return redirect('/seller/products')->with('success', 'Product deleted successfully');
+    }
+
+    public function sync()
+    {
+        try {
+            // Ambil data dari koneksi A
+            $productsA = DB::connection('oracle')->table('products')->get();
+
+            // Loop melalui setiap produk di koneksi A
+            foreach ($productsA as $productA) {
+                // Cek apakah produk dengan nama yang sama sudah ada di koneksi B
+                $productB = DB::connection('oracle_b')->table('products')->where('nama', $productA->nama)->first();
+
+                // Jika tidak ada, tambahkan produk ke koneksi B dengan stok 0
+                if (!$productB) {
+                    DB::connection('oracle_b')->table('products')->insert([
+                        'id' => $productA->id,
+                        'nama' => $productA->nama,
+                        'harga' => $productA->harga,
+                        'stok' => 0, // Stok diatur menjadi 0
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    DB::connection('oracle_b')->commit();
+                }
+            }
+
+            // Lakukan hal yang sama untuk koneksi C
+            $productsC = DB::connection('oracle_c')->table('products')->get();
+            foreach ($productsC as $productC) {
+                $productB = DB::connection('oracle_b')->table('products')->where('nama', $productC->nama)->first();
+                if (!$productB) {
+                    DB::connection('oracle_b')->table('products')->insert([
+                        'id' => $productC->id,
+                        'nama' => $productC->nama,
+                        'harga' => $productC->harga,
+                        'stok' => 0,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    DB::connection('oracle_b')->commit();
+                }
+            }
+
+            return response()->json(['message' => 'Manual sync completed'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error during sync: ' . $e->getMessage()], 500);
+        }
     }
 }

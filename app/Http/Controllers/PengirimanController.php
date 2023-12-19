@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pengiriman;
 use App\Models\Pengirimans;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PengirimanController extends Controller
 {
@@ -29,6 +30,7 @@ class PengirimanController extends Controller
             'lokasi' => $request->lokasi,
             'estimasi' => $request->estimasi,
         ]);
+        DB::raw('commit;');
 
         $pengirimanData = Pengirimans::all();
         return response()->json(['success' => 'Pengiriman added successfully.', 'pengirimanData' => $pengirimanData]);
@@ -66,6 +68,7 @@ class PengirimanController extends Controller
             'lokasi' => $request->lokasi,
             'estimasi' => $request->estimasi,
         ]);
+        DB::raw('commit;');
 
         // Return success response
         $pengirimanData = Pengirimans::all();
@@ -76,6 +79,7 @@ class PengirimanController extends Controller
     {
         // Delete record
         Pengirimans::findOrFail($id)->delete();
+        DB::raw('commit;');
         $pengirimanData = Pengirimans::all();
         return response()->json(['success' => 'Pengiriman deleted successfully.', 'pengirimanData' => $pengirimanData]);
     }

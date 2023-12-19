@@ -49,6 +49,7 @@ class CartController extends Controller
         if ($existingCartItem) {
             // If the product is already in the cart, update the quantity
             $existingCartItem->update(['qty' => $existingCartItem->qty + $quantity]);
+            DB::raw('commit;');
         } else {
             // If not, add a new item to the cart
             Cart::create([
@@ -56,6 +57,7 @@ class CartController extends Controller
                 'products_id' => $productId,
                 'qty' => $quantity,
             ]);
+            DB::raw('commit;');
         }
 
         return redirect('customer/cart')->with('success', 'Product added to cart successfully!');
@@ -129,6 +131,7 @@ class CartController extends Controller
 
             // Hapus item dari keranjang
             $cartItem->delete();
+            DB::raw('commit;');
 
             // Hitung ulang subtotal dan kirim respons
             $user = Auth::user();
