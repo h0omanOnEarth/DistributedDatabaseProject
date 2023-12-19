@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ProductViewC extends Model
 {
     use HasFactory;
-    protected $table = 'products_view_b';
+    protected $table = 'products_view_c';
 }

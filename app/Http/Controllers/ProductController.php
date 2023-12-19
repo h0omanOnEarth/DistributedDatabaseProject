@@ -57,9 +57,19 @@ class ProductController extends Controller
         $product = Product::find($id);
         $productName = $product->nama;
         $amount = intval($request->stock_quantity);
-        $itemsB = DB::connection('oracle_b')->table('products')->where('nama', '=', $productName)
-            ->get();
-        if (!empty($itemsB) && count($itemsB) > 0) {
+        $isPass = false;
+        $itemsB = [];
+        try {
+            $itemsB = DB::connection('oracle_b')
+                ->table('products')
+                ->where('nama', '=', $productName)
+                ->get();
+            $isPass = true;
+        } catch (\Exception $e) {
+            $isPass = false;
+        }
+
+        if ($isPass && !empty($itemsB) && count($itemsB) > 0) {
             $productB = $itemsB[0];
             $stockAvailable = $productB->stok;
             if ($stockAvailable >= $amount) {
@@ -70,6 +80,7 @@ class ProductController extends Controller
                     ->where('nama', $productName)
                     ->update(['stok' => $newStockB]);
                 DB::connection('oracle_b')->raw('commit;');
+                DB::statement("BEGIN dbms_mview.refresh('PRODUCTS_VIEW_B', 'f'); END;");
 
                 DB::table('products')
                     ->where('nama', $productName)
@@ -77,23 +88,30 @@ class ProductController extends Controller
                 DB::raw('commit;');
             } else {
                 //cek C
-                $itemsC = DB::connection('oracle_c')->table('products')->where('nama', '=', $productName)
-                    ->get();
-                if (!empty($itemsC) && count($itemsC) > 0) {
+                $isPass = false;
+                $itemsC = [];
+                try {
+                    $itemsC = DB::connection('oracle_c')
+                        ->table('products')
+                        ->where('nama', '=', $productName)
+                        ->get();
+                        $isPass = true;
+                } catch (\Exception $e) {
+                    $itemsC = [];
+                    $isPass = false;
+                }
+                if ($isPass && !empty($itemsC) && count($itemsC) > 0) {
                     $productC = $itemsC[0];
                     $stockAvailableB = $stockAvailable;
                     $stockAvailable += $productC->stok;
                     if ($stockAvailable >= $amount) {
                         //ambil dari C & branch C
-                        //kurangi yang B dulu
-                        $newStockB = $amount - $stockAvailableB;
-
+                        $newStockB = 0;
                         DB::connection('oracle_b')
                             ->table('products')
                             ->where('nama', $productName)
                             ->update(['stok' => $newStockB]);
                         DB::connection('oracle_b')->raw('commit;');
-
                         DB::connection('oracle_b')->raw('commit;');
 
                         //kurangi C
@@ -107,7 +125,12 @@ class ProductController extends Controller
                         DB::table('products')
                             ->where('nama', $productName)
                             ->increment('stok', $amount);
+                        DB::statement("BEGIN dbms_mview.refresh('PRODUCTS_VIEW_B', 'f'); END;");
+                        DB::statement("BEGIN dbms_mview.refresh('PRODUCTS_VIEW_C', 'f'); END;");
+
                         DB::raw('commit;');
+
+
                     } else {
                         return redirect('/seller/products')->with('failed', 'Stok cabang tidak mencukupi');
                     }
@@ -118,9 +141,19 @@ class ProductController extends Controller
             }
         } else {
             //check branch C
-            $itemsC = DB::connection('oracle_c')->table('products')->where('nama', '=', $productName)
-                ->get();
-            if (!empty($itemsC) && count($itemsC) > 0) {
+            $isPass = false;
+            $itemsC = [];
+            try {
+                $itemsC = DB::connection('oracle_c')
+                    ->table('products')
+                    ->where('nama', '=', $productName)
+                    ->get();
+                    $isPass = true;
+            } catch (\Exception $e) {
+                $itemsC = [];
+                $isPass = false;
+            }
+            if ($isPass && !empty($itemsC) && count($itemsC) > 0) {
                 $productC = $itemsC[0];
                 $stockAvailable = $productC->stok;
                 if ($stockAvailable >= $amount) {
@@ -135,7 +168,9 @@ class ProductController extends Controller
                     DB::table('products')
                         ->where('nama', $productName)
                         ->increment('stok', $amount);
+                    DB::statement("BEGIN dbms_mview.refresh('PRODUCTS_VIEW_C', 'f'); END;");
                     DB::raw('commit;');
+
                 } else {
                     return redirect('/seller/products')->with('failed', 'Stok cabang tidak mencukupi');
                 }
