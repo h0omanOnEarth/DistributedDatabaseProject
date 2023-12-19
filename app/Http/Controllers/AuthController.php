@@ -27,12 +27,18 @@ class AuthController extends Controller
         ]);
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            if ($user->role == 'customer') {
-                return redirect('/customer/home');
-            } elseif ($user->role == 'seller') {
-                return redirect('/seller/products');
-            } elseif ($user->role == 'admin') {
-                return redirect('/admin/home');
+            $status = $user->status;
+            if($status == 1){
+                if ($user->role == 'customer') {
+                    return redirect('/customer/home');
+                } elseif ($user->role == 'seller') {
+                    return redirect('/seller/products');
+                } elseif ($user->role == 'admin') {
+                    return redirect('/admin/home');
+                }
+            }
+            else{
+                return back()->with('error', 'Kamu di ban');
             }
         } else {
             return back()->with('error', 'Gagal login');
