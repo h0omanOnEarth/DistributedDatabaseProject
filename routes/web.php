@@ -56,7 +56,7 @@ Route::prefix('seller')->group(function () {
     Route::get('/products/update/{id}', [ProductController::class, 'gotoupdateproduct']);
     Route::put('/products/update/{id}', [ProductController::class, 'updateProduct']);
     Route::get('/products/delete/{id}', [ProductController::class, 'deleteProduct']);
-    Route::get('/products/getStock/{id}', [ProductController::class, 'updateStock']);
+    Route::post('/products/getStock', [ProductController::class, 'updateStock']);
 
     Route::get('/pengiriman', [PengirimanController::class, 'index'])->name('pengiriman.index');
     Route::post('/pengiriman/store', [PengirimanController::class, 'store'])->name('pengiriman.store');
