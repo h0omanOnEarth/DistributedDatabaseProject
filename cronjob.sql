@@ -34,7 +34,7 @@ BEGIN
             job_type => 'PLSQL_BLOCK',
             job_action => 'UPDATE HTRANS
 SET ctr_estimasi = ctr_estimasi - 1
-WHERE status = ''delivery'' AND ctr_estimasi > 0;
+WHERE status = ''''delivery'''' AND ctr_estimasi > 0;
 COMMIT;',
             number_of_arguments => 0,
             start_date => TO_TIMESTAMP_TZ('2023-12-16 12:32:21.000000000 ASIA/BANGKOK','YYYY-MM-DD HH24:MI:SS.FF TZR'),

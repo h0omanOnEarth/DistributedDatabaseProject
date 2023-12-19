@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CronJobController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\LogsController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -27,6 +28,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/users/block/{id}', [UserController::class, 'blockUser']);
     Route::get('/transactions', [TransactionController::class, 'transactionsPage']);
     Route::get('/logs', [LogsController::class, 'index']);
+    Route::get('/cronjob_manual', [CronJobController::class, 'index']);
+    Route::post('/cronjob_manual', [CronJobController::class, 'create'])->name('create.cronjob');
     Route::get('/products', [AdminProductController::class, 'productsPage']);
 });
 

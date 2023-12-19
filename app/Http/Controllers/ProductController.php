@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductViewB;
+use App\Models\ProductViewC;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,8 +16,8 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         $items = Product::get();
-        $itemsB = DB::connection('oracle_b')->select("SELECT * FROM products");
-        $itemsC = DB::connection('oracle_c')->select("SELECT * FROM products");
+        $itemsB = ProductViewB::all();
+        $itemsC = ProductViewC::all();
 
         $products = [];
         foreach ($items as $item) {
