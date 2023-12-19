@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductLog;
 use App\Models\ProductViewB;
 use App\Models\ProductViewC;
 use App\Models\User;
@@ -152,11 +153,19 @@ class ProductController extends Controller
             'harga' => 'required|numeric|min:1',
             'stok' => 'required|numeric|min:1',
         ]);
-        Product::create([
+        $product = Product::create([
             'nama' => $data['nama'],
             'harga' => $data['harga'],
             'stok' => $data['stok'],
         ]);
+
+        // Catat log penambahan produk
+        ProductLog::create([
+            'product_id' => $product->id,
+            'action' => 'created',
+            'data' => $product->toArray(),
+        ]);
+
         DB::raw('commit;');
         return back()->with('success', 'Product added successfully!');
     }
@@ -180,6 +189,13 @@ class ProductController extends Controller
         ]);
 
         $product->update($validatedData);
+
+        // Catat log pembaruan produk
+        ProductLog::create([
+            'product_id' => $product->id,
+            'action' => 'updated',
+            'data' => $product->toArray(),
+        ]);
         DB::raw('commit;');
 
         return redirect('/seller/products/update/' . $id)->with('success', 'Product updated successfully');
@@ -189,6 +205,12 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->delete();
+        // Catat log penghapusan produk
+        ProductLog::create([
+            'product_id' => $product->id,
+            'action' => 'deleted',
+            'data' => $product->toArray(),
+        ]);
         DB::raw('commit;');
 
         return redirect('/seller/products')->with('success', 'Product deleted successfully');
