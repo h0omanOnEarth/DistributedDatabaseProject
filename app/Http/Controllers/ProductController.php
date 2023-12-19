@@ -159,11 +159,12 @@ class ProductController extends Controller
             'stok' => $data['stok'],
         ]);
 
+        $logData = json_encode($product->toArray());
         // Catat log penambahan produk
         ProductLog::create([
             'product_id' => $product->id,
             'action' => 'created',
-            'data' => $product->toArray(),
+            'data' =>  $logData,
         ]);
 
         DB::raw('commit;');
@@ -189,12 +190,12 @@ class ProductController extends Controller
         ]);
 
         $product->update($validatedData);
-
+        $logData = json_encode($product->toArray());
         // Catat log pembaruan produk
         ProductLog::create([
             'product_id' => $product->id,
             'action' => 'updated',
-            'data' => $product->toArray(),
+            'data' => $logData
         ]);
         DB::raw('commit;');
 
@@ -206,10 +207,11 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
         // Catat log penghapusan produk
+        $logData = json_encode($product->toArray());
         ProductLog::create([
             'product_id' => $product->id,
             'action' => 'deleted',
-            'data' => $product->toArray(),
+            'data' => $logData
         ]);
         DB::raw('commit;');
 
