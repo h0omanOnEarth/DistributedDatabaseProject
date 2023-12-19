@@ -173,14 +173,18 @@ class CartController extends Controller
             // Mengambil data lokasi dari request
             $locationId = $request->input('location');
 
-            // Menyimpan ke tabel htrans
+            // Fetching data from 'pengirimans'
+            $pengiriman = Pengirimans::find($locationId);
+            $ctrEstimasi = $pengiriman->estimasi;
+
+            // Create record in 'Htrans'
             Htrans::create([
                 'kode' => $transCode,
                 'subtotal' => $subtotal,
-                'status' => 'pending', // Anda bisa mengganti status sesuai kebutuhan
+                'status' => 'pending', // You can change the status as needed
                 'pengirimans_id' => $locationId,
                 'users_id' => $user->id,
-
+                'ctr_estimasi' => $ctrEstimasi,
             ]);
 
             // Menyimpan ke tabel dtrans
