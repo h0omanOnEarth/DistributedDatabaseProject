@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/cronjob_manual', [CronJobController::class, 'index']);
     Route::post('/cronjob_manual', [CronJobController::class, 'create'])->name('create.cronjob');
     Route::get('/products', [AdminProductController::class, 'productsPage']);
+    Route::get('/manual-log', [LogsController::class, 'manualLog'])->name('admin.logs.manualLog');
 });
 
 Route::prefix('customer')->group(function () {

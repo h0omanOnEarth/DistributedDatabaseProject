@@ -125,12 +125,15 @@
             href="{{ url('/admin/products') }}">Products</a>
         <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}"
             href="{{ url('/admin/transactions') }}">Transactions</a>
-        <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}"
-            href="{{ url('/admin/logs') }}">AUTOMATIC LOGS</a>
+        <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}" href="{{ url('/admin/logs') }}">AUTOMATIC
+            LOGS</a>
         <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}"
             href="{{ url('/admin/cronjob_manual') }}">RUN CRONJOB MANUAL</a>
-        <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}" href="{{ url('/admin/logs') }}">Automatic
+        <a class="{{ request()->is('admin/transactions*') ? 'active' : '' }}"
+            href="{{ url('/admin/logs') }}">Automatic
             Logs</a>
+        <a class="{{ request()->is('admin/manual-log*') ? 'active' : '' }}"
+            href="{{ url('/admin/manual-log') }}">Manual Logs</a>
         <a class="{{ request()->is('logout') ? 'active' : '' }}" href="{{ url('/logout') }}">Logout</a>
     </div>
 
